@@ -1,0 +1,10 @@
+source-code-vulnerability-analysis
+*.env*
+backend/data/
+*.pyc
+*__pycache__/
+*.db
+*.db.enc
+*.db.tmp
+.ratelimit_state.json
+*data

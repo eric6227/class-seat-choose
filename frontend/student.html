@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page="student">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>自动化选座系统 - 学生</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/classroom.css">
+    <link rel="stylesheet" href="css/teacher.css">
+    <link rel="stylesheet" href="css/student.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container student-container" id="studentView">
+    <div class="student-header">
+        <div class="student-brand">
+            <h1>自动化选座系统</h1>
+            <p>我的志愿选座</p>
+        </div>
+        <div class="student-info-bar" id="studentInfoBar">
+            <div class="student-avatar" id="studentAvatar">👤</div>
+            <div class="student-info-text">
+                <div class="name" id="studentInfoName">——</div>
+                <div class="role">学生模式</div>
+            </div>
+            <div class="student-round-info" id="studentRoundInfo"></div>
+            <button class="student-logout-btn" id="studentLogoutBtn2">↩ 完成选择</button>
+        </div>
+    </div>
+    <div class="student-layout">
+        <div class="student-seats-panel">
+            <div class="student-classroom-label">教室座位图</div>
+            <div class="classroom-layout" id="classroomViewStudent"></div>
+            <div class="student-hint" id="simpleHintStudent">
+                <span>点击空座位添加志愿，志愿会自动保存 | 最多10个</span>
+            </div>
+        </div>
+        <div class="student-sidebar">
+            <div class="student-card wish-panel-card" id="wishPanelCard">
+                <div class="student-card-header">
+                    <span class="student-card-title">我的志愿</span>
+                    <span class="student-card-badge" id="wishCount">0/10</span>
+                </div>
+                <div class="wish-panel">
+                    <div class="wish-list" id="wishList"></div>
+                    <div class="wish-hint" id="wishHint">点击空座位添加志愿 | 最多10个</div>
+                </div>
+            </div>
+            <div class="student-card">
+                <div class="student-card-header">
+                    <span class="student-card-title">我的信息</span>
+                </div>
+                <div class="student-name-big" id="currentNameDisplayStudent">——</div>
+                <div class="rank-badge" id="currentRankBadgeStudent">
+                    <span class="rank-badge-text" id="currentRankBadgeTextStudent">等待开始</span>
+                </div>
+                <div class="selection-method hidden selection-method-styled" id="selectionMethodDisplay"></div>
+            </div>
+        </div>
+    </div>
+    <footer class="student-footer">最右侧第1大组 | 数据加密存储于后端服务器</footer>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/classroom.js"></script>
+<script src="js/teacher.js"></script>
+<script src="js/student.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

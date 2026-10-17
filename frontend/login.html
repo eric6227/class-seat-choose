@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page="login">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>自动化选座系统 - 登录</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/classroom.css">
+    <link rel="stylesheet" href="css/teacher.css">
+    <link rel="stylesheet" href="css/student.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="passwordOverlay">
+    <div class="password-box" id="loginBox">
+        <div id="firstTimeSetup" class="hidden">
+            <div class="icon">🔐</div>
+            <h2>首次设置教师密码</h2>
+            <p>请设置一个安全的教师密码（至少8位，需包含字母和数字，建议使用强密码）</p>
+            <input type="text" id="setupToken" placeholder="初始化令牌（由管理员提供）" autocomplete="off">
+            <input type="password" id="setupTeacherPwd" placeholder="设置教师密码（至少8位，含字母和数字）" autocomplete="new-password">
+            <input type="password" id="setupTeacherPwdConfirm" placeholder="确认教师密码" autocomplete="new-password">
+            <button id="setupTeacherPwdBtn">设置密码并进入</button>
+            <div class="error-msg" id="setupError"></div>
+        </div>
+
+        <div id="loginSection" class="hidden">
+            <div class="icon">🔐</div>
+            <h2 id="loginTitle">系统登录</h2>
+            <p id="loginSubtitle">请选择身份以进入系统</p>
+
+            <div class="role-tabs">
+                <button class="role-tab active" data-role="teacher" id="teacherTab">教师</button>
+                <button class="role-tab" data-role="student" id="studentTab">学生</button>
+            </div>
+
+            <div id="teacherLogin" class="login-panel active">
+                <input type="password" id="teacherPasswordInput" placeholder="管理密码" autocomplete="current-password">
+                <button id="teacherUnlockBtn">解锁系统</button>
+            </div>
+
+            <div id="studentLogin" class="login-panel">
+                <div id="studentStep1" class="student-step">
+                    <div class="name-input-wrapper">
+                        <input type="text" id="studentNameInput" placeholder="输入姓名全拼（如 zhangwei）" autocomplete="off">
+                        <div id="nameSuggestions" class="name-suggestions"></div>
+                    </div>
+                    <button id="studentNameNextBtn">下一步</button>
+                </div>
+                <div id="studentStep2a" class="student-step hidden">
+                    <p class="step-hint">欢迎，<span id="returningStudentName"></span></p>
+                    <input type="password" id="studentPasswordInput" placeholder="请输入密码" autocomplete="current-password">
+                    <button id="studentLoginBtn">登录</button>
+                    <button class="link-btn" id="backToStep1a">← 返回选择姓名</button>
+                    <button class="link-btn" id="switchToRegister">没有密码？去注册</button>
+                </div>
+                <div id="studentStep2b" class="student-step hidden">
+                    <p class="step-hint">你好，<span id="newStudentName"></span>，请设置登录密码</p>
+                    <input type="password" id="newPasswordInput" placeholder="设置密码" autocomplete="new-password">
+                    <input type="password" id="confirmPasswordInput" placeholder="确认密码" autocomplete="new-password">
+                    <button id="studentRegisterBtn">设置并登录</button>
+                    <button class="link-btn" id="backToStep1b">← 返回选择姓名</button>
+                    <button class="link-btn" id="switchToLogin">已有密码？去登录</button>
+                </div>
+            </div>
+
+            <div id="pwdError" class="error-msg"></div>
+        </div>
+    </div>
+</div>
+
+<div id="setupWizardOverlay" class="modal-overlay hidden">
+    <div class="modal-content setup-wizard">
+        <div class="modal-header">
+            <h3>首次配置向导</h3>
+        </div>
+        <div class="modal-body" id="setupWizardBody">
+            <div class="wizard-steps">
+                <div class="wizard-step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">教师密码</div>
+                </div>
+                <div class="wizard-divider"></div>
+                <div class="wizard-step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">教室布局</div>
+                </div>
+                <div class="wizard-divider"></div>
+                <div class="wizard-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">导入名单</div>
+                </div>
+            </div>
+            <div id="wizardStepContent"></div>
+            <div class="wizard-error" id="wizardError"></div>
+        </div>
+        <div class="modal-actions" id="wizardFooter">
+            <button class="cancel hidden" id="wizardPrevBtn">← 上一步</button>
+            <button class="confirm" id="wizardNextBtn">下一步 →</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/classroom.js"></script>
+<script src="js/teacher.js"></script>
+<script src="js/student.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

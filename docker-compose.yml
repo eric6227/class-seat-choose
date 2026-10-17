@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:7.4-alpine
+    container_name: seat-redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - seat_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  backend:
+    build: ./backend
+    container_name: seat-backend
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=sqlite:///./data/seat.db
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY:-}
+      - TEACHER_INIT_PASSWORD=${TEACHER_INIT_PASSWORD:-}
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - seat_data:/app/data
+    networks:
+      - seat_network
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import http.client;c=http.client.HTTPConnection('localhost',8481,timeout=5);c.request('GET','/api/auth/check-setup');exit(0 if c.getresponse().status<500 else 1)\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  frontend:
+    build: ./frontend
+    container_name: seat-frontend
+    restart: unless-stopped
+    ports:
+      - "8480:8480"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - seat_network
+
+networks:
+  seat_network:
+    driver: bridge
+
+volumes:
+  seat_data:
+    driver: local
+  redis_data:
+    driver: local

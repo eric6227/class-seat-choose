@@ -1,0 +1,343 @@
+/* ===== Password Overlay ===== */
+#passwordOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #dce8f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.password-box {
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    padding: 48px 40px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    width: 480px;
+    animation: slideUp var(--motion-duration-slower) var(--motion-ease-standard);
+    border: 1px solid var(--border-light);
+}
+
+.password-box .icon {
+    width: 80px;
+    height: 80px;
+    background: var(--primary);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 36px;
+    color: white;
+}
+
+.password-box h2 {
+    margin: 0 0 8px 0;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.password-box p {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+}
+
+.password-box input {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 1rem;
+    border-radius: var(--radius);
+    border: 2px solid var(--border-light);
+    margin-bottom: 16px;
+    outline: none;
+    transition: var(--transition-fast);
+    background: var(--bg-secondary);
+    font-family: inherit;
+}
+
+.password-box input:focus {
+    border-color: var(--primary);
+    background: var(--bg-card);
+}
+
+.password-box button {
+    width: 100%;
+    padding: 14px 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-family: inherit;
+}
+
+.password-box button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+/* ===== Role Tabs ===== */
+.role-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: var(--bg-secondary);
+    padding: 4px;
+    border-radius: var(--radius);
+}
+
+.role-tab {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background-color var(--motion-duration-quick) var(--motion-ease-standard),
+                color var(--motion-duration-quick) var(--motion-ease-standard);
+    font-family: inherit;
+}
+
+.role-tab.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.role-tab:hover:not(.active) {
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+/* ===== Login Panels ===== */
+.login-panel {
+    display: none;
+}
+
+.login-panel.active {
+    display: block;
+    animation: slideUp var(--motion-duration-quick) var(--motion-ease-standard);
+}
+
+.student-step {
+    animation: slideUp var(--motion-duration-bounce) var(--motion-ease-standard);
+}
+
+.student-step select {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 1rem;
+    border-radius: var(--radius);
+    border: 2px solid var(--border-light);
+    margin-bottom: 16px;
+    outline: none;
+    transition: var(--transition-fast);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.student-step select:focus {
+    border-color: var(--primary);
+    background: var(--bg-card);
+}
+
+.student-step .step-hint {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+}
+
+.student-step .step-hint span {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.link-btn {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    margin-top: 8px;
+    font-family: inherit;
+}
+
+.link-btn:hover {
+    color: var(--primary);
+}
+
+/* ===== Name Input ===== */
+.name-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+#studentNameInput {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 16px;
+    outline: none;
+    transition: all var(--motion-duration-bounce) var(--motion-ease-standard);
+    font-family: inherit;
+}
+
+#studentNameInput:focus {
+    border-color: var(--primary);
+    background: var(--bg-card);
+    box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
+}
+
+.name-suggestions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    max-height: 160px;
+    overflow-y: auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    display: none;
+    font-size: 14px;
+}
+
+.name-suggestion-item {
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all var(--motion-duration-fast) var(--motion-ease-standard);
+    border-bottom: 1px solid var(--bg-secondary);
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.name-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.name-suggestion-item:hover,
+.name-suggestion-item.highlighted {
+    background: var(--primary);
+    color: white;
+}
+
+/* ===== Setup Wizard ===== */
+.setup-wizard { max-width: 520px; }
+.wizard-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 20px;
+    padding: 16px 0;
+}
+.wizard-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.wizard-step .step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    transition: all 0.3s;
+}
+.wizard-step.active .step-number {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+.wizard-step.done .step-number {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+}
+.wizard-step .step-label { font-size: 0.8rem; color: var(--text-muted); }
+.wizard-step.active .step-label { color: var(--text-primary); font-weight: 600; }
+.wizard-step.done .step-label { color: var(--success); }
+.wizard-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--border-light);
+    margin-bottom: 22px;
+}
+.wizard-step.done + .wizard-divider { background: var(--success); }
+#wizardStepContent { min-height: 320px; }
+.wizard-error { color: var(--danger); font-size: 0.85rem; margin-top: 8px; min-height: 20px; }
+#wizardFooter {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px 20px 24px;
+}
+#wizardFooter button {
+    padding: 8px 24px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+}
+#wizardFooter button.confirm { background: var(--primary); color: white; }
+#wizardFooter button.cancel { background: var(--bg-secondary); color: var(--text-secondary); }
+#wizardFooter button.confirm:hover { background: var(--primary-dark); }
+#wizardFooter button.cancel:hover { background: var(--border-light); }
+#wizardStepContent h4 { margin-bottom: 8px; font-size: 1.05rem; }
+#wizardStepContent p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 12px; }
+.wizard-import-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 24px;
+    border: 2px dashed var(--border-light);
+    border-radius: var(--radius);
+}
+.wizard-import-area .muted { color: var(--text-muted); font-size: 0.85rem; }
+.wizard-import-area button.primary {
+    padding: 10px 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
+.wizard-import-area button.primary:hover { background: var(--primary-dark); }

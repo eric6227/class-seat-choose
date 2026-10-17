@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page="teacher">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>自动化选座系统 - 教师</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/classroom.css">
+    <link rel="stylesheet" href="css/teacher.css">
+    <link rel="stylesheet" href="css/student.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container" id="teacherView">
+    <div class="header">
+        <div class="title">
+            <h1>自动化选座系统</h1>
+            <p>总分排序 · 同桌权限可配置 · 拖拽换位管理</p>
+        </div>
+        <button id="teacherLogoutBtn" class="back-btn">返回登录</button>
+        <div class="toolbar">
+            <div class="toolbar-group">
+                <button id="completeBtn" class="primary hidden" title="完成当前轮次选座">完成选座</button>
+                <button id="startRoundBtn" class="primary hidden" title="开始新一轮选座">新一轮</button>
+                <button id="helpBtn" class="secondary" title="使用帮助">帮助</button>
+                <button id="nextStudentBtn" class="primary" title="选座/下一名学生">▶ 下一名</button>
+                <button id="undoRoundBtn" class="secondary" title="撤销上一位同学的操作">↩️ 撤销</button>
+                <button id="companionBtn" title="设置前N名可看见已选座位的同学名字">显示同桌</button>
+                <button id="toggleNamesBtn" title="强制显示/隐藏座位姓名">显示姓名</button>
+                <button id="toggleGenderBtn" title="显示/隐藏性别">显示性别</button>
+                <button id="studentManageBtn" class="secondary" title="学生管理">学生管理</button>
+                <button id="viewWishesBtn" class="secondary" title="查看志愿">志愿</button>
+                <button id="lockWishesBtn" class="secondary" title="志愿锁定">志愿锁定</button>
+                <button id="moreFunctionsBtn" class="secondary" title="更多功能">更多</button>
+            </div>
+        </div>
+    </div>
+    <div class="main-layout">
+        <div class="seats-panel" id="dropZone">
+            <div class="classroom-layout" id="classroomView"></div>
+            <div class="log-area" id="simpleHint">
+                <span class="icon">💡</span>
+                <span>点击座位选座 | 显示同桌未开启 | 拖拽.csc123/.xlsx导入</span>
+            </div>
+            <div class="inline-layout-editor hidden" id="layoutEditorInline">
+                <div class="ile-header" id="ileToggle">
+                    <span>教室布局设置</span>
+                    <span class="ile-arrow">▼</span>
+                </div>
+                <div class="ile-body" id="ileBody">
+                    <div class="layout-form">
+                        <div class="form-row">
+                            <label>大组数</label>
+                            <div class="stepper">
+                                <button id="iGroupsMinus">−</button>
+                                <input type="number" id="iGroups" value="4" min="1" max="10">
+                                <button id="iGroupsPlus">+</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <label>每大组列数</label>
+                            <div class="stepper">
+                                <button id="iColsMinus">−</button>
+                                <input type="number" id="iCols" value="2" min="2" max="9">
+                                <button id="iColsPlus">+</button>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label>总排数</label>
+                            <div class="stepper">
+                                <button id="iRowsMinus">−</button>
+                                <input type="number" id="iRows" value="7" min="1" max="9">
+                                <button id="iRowsPlus">+</button>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <label>同桌配对</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="iHasPairs" checked>
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-label" id="iPairsLabel">两列合并为同桌</span>
+                            </label>
+                        </div>
+                        <div class="layout-preview">
+                            <div class="preview-label">预览：<span id="iPreviewTotal">58</span> 个座位 (含2个讲台位)</div>
+                            <div class="preview-hint" id="iPreviewHint"></div>
+                        </div>
+                        <div class="ile-actions" id="ileActionsNormal">
+                            <button class="primary" id="iSaveBtn">保存布局</button>
+                            <button class="primary" id="iDisableBtn">修改座位可选性</button>
+                        </div>
+                        <div class="ile-actions hidden" id="ileActionsEdit">
+                            <span class="edit-mode-label">编辑模式</span>
+                            <button class="primary" id="iDisableSaveBtn">保存可选性</button>
+                            <button class="secondary" id="iDisableCancelBtn">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="control-panel">
+            <div class="panel-card">
+                <div class="current-card">
+                    <div class="label">当前选座学生</div>
+                    <div class="student-name-big" id="currentNameDisplay">——</div>
+                    <div class="rank-badge" id="currentRankBadge">
+                        <span class="rank-badge-text" id="currentRankBadgeText">等待开始</span>
+                    </div>
+                    <div class="actions">
+                        <button id="nextStudentBtn2" class="primary">▶ 下一名</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-card">
+                <div class="card-header">
+                    <div class="card-title">学生名单</div>
+                    <button id="toggleStudentListBtn" class="small">收起</button>
+                </div>
+                <div id="studentListPanel" class="student-list"></div>
+            </div>
+            <div class="panel-card">
+                <div class="card-header">
+                    <div class="card-title">已完成选座</div>
+                    <button id="toggleCompletedBtn" class="small">收起</button>
+                </div>
+                <div id="completedListPreview" class="completed-list"></div>
+            </div>
+        </div>
+    </div>
+    <footer>最右侧第1大组 | 数据加密存储于后端服务器</footer>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/classroom.js"></script>
+<script src="js/teacher.js"></script>
+<script src="js/student.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

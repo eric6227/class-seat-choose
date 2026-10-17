@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page="student-manage">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>自动化选座系统 - 学生管理</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/classroom.css">
+    <link rel="stylesheet" href="css/teacher.css">
+    <link rel="stylesheet" href="css/student.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="student-manage-container" id="studentManageView">
+    <div class="student-manage-header">
+        <h2>学生密码管理</h2>
+        <button class="back-btn" id="studentManageBackBtn">← 返回</button>
+    </div>
+    <div class="student-manage-stats">
+        <div class="stat-card">
+            <div class="stat-number" id="studentManageTotalStudents">0</div>
+            <div class="stat-label">总学生数</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="studentManageHasPassword">0</div>
+            <div class="stat-label">已设置密码</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="studentManageNoPassword">0</div>
+            <div class="stat-label">未设置密码</div>
+        </div>
+    </div>
+    <div class="student-manage-table-wrapper">
+        <table class="student-manage-table">
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>密码状态</th>
+                    <th class="col-wish">志愿</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="studentManageTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script src="js/login.js"></script>
+<script src="js/classroom.js"></script>
+<script src="js/teacher.js"></script>
+<script src="js/student.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
