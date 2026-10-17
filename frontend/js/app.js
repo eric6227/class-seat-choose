@@ -1305,7 +1305,7 @@ function renderWizardStep() {
         content.innerHTML = '<h4>设置教师密码</h4>' +
             '<p>请设置一个安全的教师密码，用于后续登录教师身份。</p>' +
             '<input type="text" id="wizardSetupToken" placeholder="初始化令牌（由管理员提供）" autocomplete="off">' +
-            '<input type="password" id="wizardPwd" placeholder="教师密码（至少8位，包含字母和数字）" autocomplete="new-password">' +
+            '<input type="password" id="wizardPwd" placeholder="教师密码（至少10位，包含大小写字母和数字）" autocomplete="new-password">' +
             '<input type="password" id="wizardPwdConfirm" placeholder="确认教师密码" autocomplete="new-password">';
         prevBtn.style.display = 'none';
         nextBtn.textContent = '下一步 →';
@@ -1436,8 +1436,8 @@ async function wizardNext() {
         var pwd = document.getElementById('wizardPwd') ? document.getElementById('wizardPwd').value : '';
         var confirm = document.getElementById('wizardPwdConfirm') ? document.getElementById('wizardPwdConfirm').value : '';
         var setupToken = document.getElementById('wizardSetupToken') ? document.getElementById('wizardSetupToken').value : '';
-        if (!pwd || pwd.length < 8) { errorEl.textContent = '密码至少8位'; return; }
-        if (!/[a-zA-Z]/.test(pwd) || !/\d/.test(pwd)) { errorEl.textContent = '密码必须包含字母和数字'; return; }
+        if (!pwd || pwd.length < 10) { errorEl.textContent = '密码至少10位'; return; }
+        if (!/[a-z]/.test(pwd) || !/[A-Z]/.test(pwd) || !/\d/.test(pwd)) { errorEl.textContent = '密码必须包含大小写字母和数字'; return; }
         if (pwd !== confirm) { errorEl.textContent = '两次密码不一致'; return; }
         if (!setupToken) { errorEl.textContent = '请输入初始化令牌'; return; }
         try {
@@ -2837,12 +2837,12 @@ async function initApp() {
             errorEl.textContent = '请输入初始化令牌';
             return;
         }
-        if (!pwd || pwd.length < 8) {
-            errorEl.textContent = '密码至少8位，且需包含字母和数字';
+        if (!pwd || pwd.length < 10) {
+            errorEl.textContent = '密码至少10位，且需包含大小写字母和数字';
             return;
         }
-        if (!/[a-zA-Z]/.test(pwd) || !/\d/.test(pwd)) {
-            errorEl.textContent = '密码必须包含字母和数字';
+        if (!/[a-z]/.test(pwd) || !/[A-Z]/.test(pwd) || !/\d/.test(pwd)) {
+            errorEl.textContent = '密码必须包含大小写字母和数字';
             return;
         }
         if (pwd !== confirm) {
@@ -2956,8 +2956,8 @@ async function initApp() {
         var confirmPwd = document.getElementById('confirmPasswordInput').value;
         if (!pwd || !confirmPwd) { showError('请填写密码和确认密码'); return; }
         if (pwd !== confirmPwd) { showError('两次输入的密码不一致'); return; }
-        if (pwd.length < 8) { showError('密码长度至少8位，且需包含字母和数字'); return; }
-        if (!/[a-zA-Z]/.test(pwd) || !/\d/.test(pwd)) { showError('密码必须包含字母和数字'); return; }
+        if (pwd.length < 10) { showError('密码长度至少10位，且需包含大小写字母和数字'); return; }
+        if (!/[a-z]/.test(pwd) || !/[A-Z]/.test(pwd) || !/\d/.test(pwd)) { showError('密码必须包含大小写字母和数字'); return; }
         showLoading('注册中...');
         try {
             var resp = await studentRegisterAction(name, pwd, confirmPwd);

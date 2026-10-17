@@ -4,10 +4,12 @@ import re
 
 
 def _validate_password_complexity(v: str, field_name: str) -> str:
-    if len(v) < 8:
-        raise ValueError(f"{field_name}至少8位")
-    if not re.search(r'[a-zA-Z]', v):
-        raise ValueError(f"{field_name}必须包含字母")
+    if len(v) < 10:
+        raise ValueError(f"{field_name}至少10位")
+    if not re.search(r'[a-z]', v):
+        raise ValueError(f"{field_name}必须包含小写字母")
+    if not re.search(r'[A-Z]', v):
+        raise ValueError(f"{field_name}必须包含大写字母")
     if not re.search(r'\d', v):
         raise ValueError(f"{field_name}必须包含数字")
     return v
@@ -46,7 +48,7 @@ class StudentRegisterRequest(BaseModel):
 
 
 class SetupTeacherRequest(BaseModel):
-    password: str = Field(..., min_length=8)
+    password: str = Field(..., min_length=10)
     setup_token: str = Field(..., min_length=1)
 
     @field_validator("password")
