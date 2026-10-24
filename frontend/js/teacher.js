@@ -784,7 +784,25 @@ function showInlineLayoutEditor() {
         }
     }
 
+    function updateActionPanelVisibility() {
+        var normalActions = document.getElementById('ileActionsNormal');
+        var editActions = document.getElementById('ileActionsEdit');
+        if (!normalActions || !editActions) return;
+        if (State.seatDisableMode) {
+            normalActions.style.display = 'none';
+            normalActions.classList.add('hidden');
+            editActions.style.display = 'flex';
+            editActions.classList.remove('hidden');
+        } else {
+            normalActions.style.display = 'flex';
+            normalActions.classList.remove('hidden');
+            editActions.style.display = 'none';
+            editActions.classList.add('hidden');
+        }
+    }
+
     doUpdatePreview();
+    updateActionPanelVisibility();
 
     if (!_ileReady) {
         _ileReady = true;

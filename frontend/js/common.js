@@ -376,7 +376,7 @@ function updateHintText() {
         hintEl.innerHTML = '<span class="icon"></span><span>点击空座位添加志愿，志愿会自动保存 | 最多10个</span>';
     } else {
         var text = State.companionQuota > 0 ? '前' + State.companionQuota + '名可看到已选座位同学名字' : '显示同桌未开启';
-        hintEl.innerHTML = '<span class="icon"></span><span>点击座位选座 | ' + text + ' | 拖拽.csc123/.xlsx导入</span>';
+        hintEl.innerHTML = '<span class="icon"></span><span>点击座位选座</span>';
     }
 }
 
@@ -601,9 +601,13 @@ function showSessionExpiredModal() {
     showToast('Token 已过期', 'error');
 }
 
-function logout() {
+async function logout() {
     API._tokenExpiredHandled = true;
-    API.auth.logout().catch(function(){});
+    try {
+        await API.auth.logout();
+    } catch (e) {
+        // 忽略登出请求错误，继续本地清理
+    }
     API.clearSession();
     State.role = null;
     State.studentName = null;

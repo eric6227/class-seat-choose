@@ -467,7 +467,7 @@ function renderClassroom() {
             if (State.seatDisableMode) {
                 hint.innerHTML = '<span class="icon">🖊️</span><span>编辑模式：点击座位切换可选性（灰色=禁用） | 点击下方按钮保存或取消</span>';
             } else {
-                hint.innerHTML = '<span class="icon">💡</span><span>点击座位选座 | 显示同桌未开启 | 拖拽.csc123/.xlsx导入</span>';
+                hint.innerHTML = '<span class="icon"></span><span>点击座位选座</span>';
             }
         }
     }
@@ -2189,7 +2189,7 @@ function updateHintText() {
         hintEl.innerHTML = '<span class="icon"></span><span>点击空座位添加志愿，志愿会自动保存 | 最多10个</span>';
     } else {
         var text = State.companionQuota > 0 ? '前' + State.companionQuota + '名可看到已选座位同学名字' : '显示同桌未开启';
-        hintEl.innerHTML = '<span class="icon"></span><span>点击座位选座 | ' + text + ' | 拖拽.csc123/.xlsx导入</span>';
+        hintEl.innerHTML = '<span class="icon"></span><span>点击座位选座</span>';
     }
 }
 
@@ -2756,22 +2756,6 @@ function clearError() {
 
 /* ==================== Name Suggestions ==================== */
 function populateStudentNameInput() {
-}
-
-function renderNameSuggestions(matches, query) {
-    var el = document.getElementById('nameSuggestions');
-    if (!el) return;
-    if (matches.length === 0) {
-        el.innerHTML = '<div class="name-suggestion-item no-match">无匹配结果</div>';
-        el.style.display = 'block';
-        return;
-    }
-    var html = '';
-    matches.forEach(function (m) {
-        html += '<div class="name-suggestion-item" data-name="' + escapeHtml(m.name) + '">' + escapeHtml(m.name) + '</div>';
-    });
-    el.innerHTML = html;
-    el.style.display = 'block';
 }
 
 function hideNameSuggestions() {

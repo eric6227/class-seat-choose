@@ -4,7 +4,12 @@ import sys
 import stat
 from functools import lru_cache
 
-_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+def _get_base_dir() -> str:
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+_DATA_DIR = os.path.join(_get_base_dir(), "data")
 _ENCRYPTION_KEY_FILE = os.path.join(_DATA_DIR, ".encryption_key")
 _SECRET_KEY_FILE = os.path.join(_DATA_DIR, ".secret_key")
 

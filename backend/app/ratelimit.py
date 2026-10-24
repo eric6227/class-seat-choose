@@ -9,11 +9,11 @@ from collections import defaultdict
 from fastapi import HTTPException, status, Request
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
-from app.config import get_settings
+from app.config import get_settings, _get_base_dir
 
 settings = get_settings()
 
-_DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+_DATA_DIR = os.path.join(_get_base_dir(), "data")
 _RATELIMIT_DUMP_FILE = os.path.join(_DATA_DIR, ".ratelimit_state.json")
 
 _RATE_LIMIT_LUA = """

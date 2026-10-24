@@ -102,33 +102,6 @@ function populateStudentNameInput() {
     });
 }
 
-function renderNameSuggestions(matches, query) {
-    var el = document.getElementById('nameSuggestions');
-    if (!el) return;
-    if (matches.length === 0) {
-        el.innerHTML = '<div class="name-suggestion-item no-match">无匹配结果</div>';
-        el.style.display = 'block';
-        return;
-    }
-    var html = '';
-    matches.forEach(function (m) {
-        html += '<div class="name-suggestion-item" data-name="' + escapeHtml(m.name) + '">' + escapeHtml(m.name) + '</div>';
-    });
-    el.innerHTML = html;
-    el.style.display = 'block';
-
-    el.querySelectorAll('.name-suggestion-item[data-name]').forEach(function (item) {
-        item.addEventListener('mousedown', function (e) {
-            e.preventDefault();
-            var inputEl = document.getElementById('studentNameInput');
-            if (inputEl) {
-                inputEl.value = item.getAttribute('data-name');
-            }
-            hideNameSuggestions();
-        });
-    });
-}
-
 function hideNameSuggestions() {
     var el = document.getElementById('nameSuggestions');
     if (el) el.style.display = 'none';

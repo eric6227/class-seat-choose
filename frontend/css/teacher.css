@@ -478,6 +478,7 @@
 .ile-body { padding: 16px; }
 .ile-header.collapsed + .ile-body { display: none; }
 .ile-actions { margin-top: 12px; display: flex; justify-content: flex-end; gap: 10px; }
+.ile-actions.hidden { display: none; }
 .ile-actions button.primary {
     padding: 8px 20px;
     border: none;

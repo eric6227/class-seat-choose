@@ -126,10 +126,14 @@ function renderClassroom() {
         var editActions = document.getElementById('ileActionsEdit');
         if (normalActions && editActions) {
             if (State.seatDisableMode) {
+                normalActions.style.display = 'none';
                 normalActions.classList.add('hidden');
+                editActions.style.display = 'flex';
                 editActions.classList.remove('hidden');
             } else {
+                normalActions.style.display = 'flex';
                 normalActions.classList.remove('hidden');
+                editActions.style.display = 'none';
                 editActions.classList.add('hidden');
             }
         }
@@ -138,7 +142,7 @@ function renderClassroom() {
             if (State.seatDisableMode) {
                 hint.innerHTML = '<span class="icon">🖊️</span><span>编辑模式：点击座位切换可选性（灰色=禁用） | 点击下方按钮保存或取消</span>';
             } else {
-                hint.innerHTML = '<span class="icon">💡</span><span>点击座位选座 | 显示同桌未开启 | 拖拽.csc123/.xlsx导入</span>';
+                hint.innerHTML = '<span class="icon"></span><span>点击座位选座</span>';
             }
         }
     }

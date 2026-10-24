@@ -8,3 +8,5 @@ backend/data/
 *.db.tmp
 .ratelimit_state.json
 *data
+dist
+backend/build/

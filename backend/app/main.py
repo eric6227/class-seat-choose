@@ -8,7 +8,7 @@ if ENV_FILE.exists():
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.config import get_settings
+from app.config import get_settings, _get_base_dir
 from app.database import init_db
 from app.routers import auth, seats
 from app.csrf import CSRFTokenMiddleware
@@ -22,6 +22,42 @@ app = FastAPI(
     docs_url="/api/docs" if settings.DEBUG else None,
     redoc_url=None,
 )
+
+if os.getenv("SERVE_STATIC", "").lower() == "true":
+    from fastapi.staticfiles import StaticFiles
+    from fastapi.responses import FileResponse
+
+    _frontend_dir = os.path.join(_get_base_dir(), "..", "frontend")
+    _frontend_dir = os.path.normpath(os.path.abspath(_frontend_dir))
+
+    if os.path.isdir(_frontend_dir):
+        app.mount("/css", StaticFiles(directory=os.path.join(_frontend_dir, "css")), name="css")
+        app.mount("/js", StaticFiles(directory=os.path.join(_frontend_dir, "js")), name="js")
+
+        @app.get("/login.html")
+        async def _serve_login():
+            return FileResponse(os.path.join(_frontend_dir, "login.html"))
+
+        @app.get("/student.html")
+        async def _serve_student():
+            return FileResponse(os.path.join(_frontend_dir, "student.html"))
+
+        @app.get("/teacher.html")
+        async def _serve_teacher():
+            return FileResponse(os.path.join(_frontend_dir, "teacher.html"))
+
+        @app.get("/student-manage.html")
+        async def _serve_student_manage():
+            return FileResponse(os.path.join(_frontend_dir, "student-manage.html"))
+
+        @app.middleware("http")
+        async def _local_security_headers(request, call_next):
+            response = await call_next(request)
+            response.headers["X-Content-Type-Options"] = "nosniff"
+            response.headers["X-Frame-Options"] = "DENY"
+            response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+            response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+            return response
 
 app.add_middleware(
     CORSMiddleware,
@@ -41,7 +77,7 @@ app.include_router(seats.router)
 
 @app.on_event("startup")
 async def startup_event():
-    data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
+    data_dir = os.path.join(_get_base_dir(), "data")
     os.makedirs(data_dir, exist_ok=True)
     init_db()
     await RedisClient.connect(settings.REDIS_URL)
