@@ -62,7 +62,7 @@ cd class-seat-choose
 # 方式A：命令行直接注入
 export TEACHER_INIT_TOKEN=你的随机令牌
 # 方式B：在项目目录下创建 .env 文件，写入：
-cp .enc.example .env
+cp .env.example .env
 nano .env
 # 在 nano 文本编辑器里修改：TEACHER_INIT_TOKEN=你的随机令牌
 
