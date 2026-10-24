@@ -1,5 +1,5 @@
 source-code-vulnerability-analysis
-*.env*
+.env
 backend/data/
 *.pyc
 *__pycache__/
