@@ -1,4 +1,146 @@
-/* ===== Classroom Layout ===== */
+/* ===== Main Container ===== */
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: none;
+    animation: fadeIn var(--motion-duration-slower) var(--motion-ease-standard);
+}
+
+/* ===== Header ===== */
+.header {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 16px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    gap: 20px;
+    border: 1px solid var(--border-light);
+}
+
+.header .title h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header .title p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.header .title .badge {
+    background: var(--warning);
+    color: white;
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.65rem;
+    font-weight: 600;
+}
+
+/* ===== Toolbar ===== */
+.toolbar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 6px;
+    padding: 4px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+}
+
+.toolbar button, .toolbar label.button {
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+}
+
+.toolbar button:hover, .toolbar label.button:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.toolbar button.primary {
+    background: var(--primary);
+    color: white;
+    border-color: transparent;
+}
+
+.toolbar button.primary:hover {
+    background: var(--primary-dark);
+}
+
+.toolbar button.success {
+    background: var(--success);
+    color: white;
+    border-color: transparent;
+}
+
+.toolbar button.warning {
+    background: var(--warning);
+    color: white;
+    border-color: transparent;
+}
+
+.toolbar button.danger {
+    background: var(--danger);
+    color: white;
+    border-color: transparent;
+}
+
+.toolbar button.special {
+    background: var(--purple);
+    color: white;
+    border-color: transparent;
+}
+
+.toolbar button.active {
+    background: var(--pink);
+    color: white;
+    border-color: transparent;
+    animation: pulse var(--motion-duration-pulse) var(--motion-ease-standard) infinite;
+}
+
+/* ===== Main Layout ===== */
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+}
+
+/* ===== Seats Panel ===== */
+.seats-panel {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+    border: 1px solid var(--border-light);
+}
+
 .classroom-layout {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
@@ -40,7 +182,11 @@
     box-shadow: var(--shadow-sm);
 }
 
-/* ===== Side Seats (Platform) ===== */
+.special-side-seats {
+    display: flex;
+    gap: 16px;
+}
+
 .side-seat {
     background: rgba(255,255,255,0.95);
     border: 2px solid var(--border-medium);
@@ -106,40 +252,21 @@
     box-shadow: none;
 }
 
-.side-seat.edit-disabled {
+.side-seat.edit-disabled, .seat.edit-disabled {
     background: #f1f5f9;
     border: 2px dashed #cbd5e1;
     cursor: pointer;
     opacity: 0.5;
 }
 
-.side-seat.edit-disabled:hover {
+.side-seat.edit-disabled:hover, .seat.edit-disabled:hover {
     border-color: #94a3b8;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     opacity: 0.7;
 }
 
-.side-seat.drag-over {
-    border-color: var(--success);
-    background: #d5f5e3;
-    transform: scale(1.05);
-}
-
-.side-seat.wish-highlight {
-    border: 3px solid var(--warning) !important;
-    box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.25), 0 4px 12px rgba(230, 126, 34, 0.3) !important;
-    animation: pulse-wish var(--motion-duration-pulse-wish) var(--motion-ease-inout) infinite;
-}
-
-.side-seat.my-seat {
-    border: 3px solid var(--success) !important;
-    background: linear-gradient(135deg, #d5f5e3, #abebc6) !important;
-    box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.25), 0 4px 12px rgba(39, 174, 96, 0.3) !important;
-    animation: pulse-wish var(--motion-duration-pulse-wish) var(--motion-ease-inout) infinite;
-}
-
-/* ===== Groups Grid ===== */
+/* ===== Seat Grid ===== */
 .groups-grid {
     display: flex;
     flex-wrap: wrap;
@@ -181,7 +308,6 @@
     justify-content: center;
 }
 
-/* ===== Seat ===== */
 .seat {
     background: var(--bg-card);
     border: 2px solid var(--border-medium);
@@ -237,19 +363,22 @@
     white-space: nowrap;
 }
 
-.seat.drag-over {
+.seat.drag-over,
+.side-seat.drag-over {
     border-color: var(--success);
     background: #d5f5e3;
     transform: scale(1.05);
 }
 
-.seat.wish-highlight {
+.seat.wish-highlight,
+.side-seat.wish-highlight {
     border: 3px solid var(--warning) !important;
     box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.25), 0 4px 12px rgba(230, 126, 34, 0.3) !important;
     animation: pulse-wish var(--motion-duration-pulse-wish) var(--motion-ease-inout) infinite;
 }
 
-.seat.my-seat {
+.seat.my-seat,
+.side-seat.my-seat {
     border: 3px solid var(--success) !important;
     background: linear-gradient(135deg, #d5f5e3, #abebc6) !important;
     box-shadow: 0 0 0 4px rgba(39, 174, 96, 0.25), 0 4px 12px rgba(39, 174, 96, 0.3) !important;
@@ -270,21 +399,53 @@
     box-shadow: none;
 }
 
-.seat.edit-disabled {
-    background: #f1f5f9;
-    border: 2px dashed #cbd5e1;
+/* ===== Student Info Bar ===== */
+.student-info-bar {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+}
+
+body.student-mode .student-info-bar {
+    display: flex;
+}
+
+.student-avatar {
+    font-size: 1.5rem;
+}
+
+.student-info-text .name {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.student-info-text .role {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.change-pwd-btn, .logout-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
     cursor: pointer;
-    opacity: 0.5;
+    transition: var(--transition-fast);
+    font-family: inherit;
 }
 
-.seat.edit-disabled:hover {
-    border-color: #94a3b8;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    opacity: 0.7;
+.change-pwd-btn:hover, .logout-btn:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
 }
 
-/* ===== Pair Gap ===== */
+/* ===== Pair Gap (同桌分隔) ===== */
 .seat-row.has-pairs {
     gap: 2px;
 }

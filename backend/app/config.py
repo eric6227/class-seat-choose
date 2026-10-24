@@ -78,7 +78,7 @@ class Settings:
             c.strip() for c in os.getenv("TRUSTED_PROXY_CIDRS", "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16").split(",") if c.strip()
         ]
 
-        self.TEACHER_INIT_PASSWORD = os.getenv("TEACHER_INIT_PASSWORD", "")
+        self.TEACHER_INIT_TOKEN = os.getenv("TEACHER_INIT_TOKEN", "")
 
 
 @lru_cache()

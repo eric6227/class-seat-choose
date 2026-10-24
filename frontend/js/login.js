@@ -66,7 +66,40 @@ function resetStudentLogin() {
 }
 
 /* ==================== Name Suggestions ==================== */
+var allStudentNames = [];
+var _suggestionsLoaded = false;
+
 function populateStudentNameInput() {
+    if (_suggestionsLoaded) return;
+    _suggestionsLoaded = true;
+    API.students.names().then(function (data) {
+        allStudentNames = (data.names || []).map(function (n) {
+            return { name: n };
+        });
+    }).catch(function () {
+        allStudentNames = [];
+    });
+
+    var inputEl = document.getElementById('studentNameInput');
+    if (!inputEl) return;
+    if (inputEl._suggestionBound) return;
+    inputEl._suggestionBound = true;
+
+    inputEl.addEventListener('input', function () {
+        var query = inputEl.value.trim().toLowerCase();
+        if (!query) {
+            hideNameSuggestions();
+            return;
+        }
+        var matches = allStudentNames.filter(function (n) {
+            return n.name.toLowerCase().indexOf(query) !== -1;
+        });
+        renderNameSuggestions(matches, query);
+    });
+
+    inputEl.addEventListener('blur', function () {
+        setTimeout(hideNameSuggestions, 200);
+    });
 }
 
 function renderNameSuggestions(matches, query) {
@@ -83,6 +116,17 @@ function renderNameSuggestions(matches, query) {
     });
     el.innerHTML = html;
     el.style.display = 'block';
+
+    el.querySelectorAll('.name-suggestion-item[data-name]').forEach(function (item) {
+        item.addEventListener('mousedown', function (e) {
+            e.preventDefault();
+            var inputEl = document.getElementById('studentNameInput');
+            if (inputEl) {
+                inputEl.value = item.getAttribute('data-name');
+            }
+            hideNameSuggestions();
+        });
+    });
 }
 
 function hideNameSuggestions() {

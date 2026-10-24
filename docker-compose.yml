@@ -22,7 +22,7 @@ services:
     environment:
       - DATABASE_URL=sqlite:///./data/seat.db
       - ENCRYPTION_KEY=${ENCRYPTION_KEY:-}
-      - TEACHER_INIT_PASSWORD=${TEACHER_INIT_PASSWORD:-}
+      - TEACHER_INIT_TOKEN=${TEACHER_INIT_TOKEN:-}
       - REDIS_URL=redis://redis:6379/0
     volumes:
       - seat_data:/app/data

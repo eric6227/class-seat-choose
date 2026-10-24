@@ -147,7 +147,12 @@ def student_to_dict(student: models.Student, role: str = "teacher") -> dict:
             "id": student.id,
             "name": student.name,
             "studentId": student.student_id,
+            "totalScore": student.total_score,
             "assigned": student.assigned,
+            "seatId": student.seat_id,
+            "gender": student.gender,
+            "selectionMethod": student.selection_method,
+            "roundId": student.round_id,
         }
     return {
         "id": student.id,
@@ -1507,6 +1512,49 @@ def _match_header(value):
     return None
 
 
+_GENDER_KEYWORDS = [
+    ("大屌萌妹", "m"),
+    ("跨性别男性", "m"),
+    ("跨性别男", "m"),
+    ("女装大佬", "m"),
+    ("男の娘", "m"),
+    ("女装子", "m"),
+    ("男妹子", "m"),
+    ("男娘", "m"),
+    ("伪娘", "m"),
+    ("药娘", "m"),
+    ("女装", "m"),
+    ("跨男", "m"),
+    ("FTM", "m"),
+    ("ftm", "m"),
+    ("跨性别女性", "f"),
+    ("跨性别女", "f"),
+    ("变性女", "f"),
+    ("跨女", "f"),
+    ("伪男", "f"),
+    ("跨性别", "f"),
+    ("变性", "f"),
+    ("MTF", "f"),
+    ("mtf", "f"),
+    ("男", "m"),
+    ("女", "f"),
+    ("m", "m"),
+    ("M", "m"),
+    ("f", "f"),
+    ("F", "f"),
+    ("1", "m"),
+    ("0", "f"),
+]
+
+
+def _normalize_gender(gv: str):
+    gv = gv.strip()
+    for keyword, gender in _GENDER_KEYWORDS:
+        if keyword in gv:
+            return gender
+    return None
+
+
 MAX_XLSX_ROWS = 500
 
 
@@ -1593,10 +1641,7 @@ def _parse_xlsx_students(file_bytes: bytes):
             gender = None
             if gender_col is not None and gender_col < len(row) and row[gender_col] is not None:
                 gv = str(row[gender_col]).strip()
-                if gv in ("男", "m", "M", "1"):
-                    gender = "m"
-                elif gv in ("女", "f", "F", "0"):
-                    gender = "f"
+                gender = _normalize_gender(gv)
 
             students.append({
                 "name": name,

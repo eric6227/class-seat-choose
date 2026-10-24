@@ -60,11 +60,11 @@ cd class-seat-choose
 
 # 2. 设置教师初始化令牌（必须）
 # 方式A：命令行直接注入
-export TEACHER_INIT_PASSWORD=你的随机令牌
+export TEACHER_INIT_TOKEN=你的随机令牌
 # 方式B：在项目目录下创建 .env 文件，写入：
 cp .enc.example .env
 nano .env
-# 在 nano 文本编辑器里修改：TEACHER_INIT_PASSWORD=你的随机令牌
+# 在 nano 文本编辑器里修改：TEACHER_INIT_TOKEN=你的随机令牌
 
 # 3. 构建并启动容器
 docker compose up -d
@@ -123,8 +123,8 @@ pip install -r requirements.txt
 
 # 2. 配置环境变量
 cp ../.env.example ../.env
-# 编辑项目根目录下的 .env 文件，将 TEACHER_INIT_PASSWORD 的值改为你的令牌：
-#   TEACHER_INIT_PASSWORD=你的随机令牌
+# 编辑项目根目录下的 .env 文件，将 TEACHER_INIT_TOKEN 的值改为你的令牌：
+#   TEACHER_INIT_TOKEN=你的随机令牌
 # 可选设置 SECRET_KEY 和 ENCRYPTION_KEY
 
 # 3. 启动后端（默认端口 8481）
@@ -139,7 +139,7 @@ uvicorn main:app --host 0.0.0.0 --port 8481 --reload
 
 | 变量 | 必填 | 默认值 | 说明 |
 |------|------|--------|------|
-| `TEACHER_INIT_PASSWORD` | **是** | 无 | 教师初始化令牌，首次设置教师密码时需提供。未设置则拒绝初始化请求 |
+| `TEACHER_INIT_TOKEN` | **是** | 无 | 教师初始化令牌，首次设置教师密码时需提供。未设置则拒绝初始化请求 |
 | `SECRET_KEY` | 否 | 自动生成 | JWT 签名密钥，至少 32 字符。留空则自动生成并持久化到 `data/.secret_key` |
 | `ENCRYPTION_KEY` | 否 | 自动生成 | AES-256 数据加密密钥。首次启动自动生成并持久化到 `data/.encryption_key` |
 | `DATABASE_URL` | 否 | `sqlite:///./data/seat.db` | 数据库连接地址 |
@@ -162,7 +162,7 @@ uvicorn main:app --host 0.0.0.0 --port 8481 --reload
 | 方法 | 路径 | 说明 |
 |------|------|------|
 | GET | `/auth/check-setup` | 检查教师密码是否已设置 |
-| POST | `/auth/setup` | 首次设置教师密码（需 `setup_token` 匹配 `TEACHER_INIT_PASSWORD`） |
+| POST | `/auth/setup` | 首次设置教师密码（需 `setup_token` 匹配 `TEACHER_INIT_TOKEN`） |
 | POST | `/auth/teacher/login` | 教师登录 |
 | POST | `/auth/student/login` | 学生登录 |
 | POST | `/auth/student/register` | 学生注册（首次设置密码） |

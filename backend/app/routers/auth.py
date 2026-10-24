@@ -25,9 +25,9 @@ def check_setup(db: Session = Depends(get_db)):
 @router.post("/setup", response_model=schemas.MessageResponse)
 def setup_teacher(req: schemas.SetupTeacherRequest, db: Session = Depends(get_db)):
     settings = get_settings()
-    if not settings.TEACHER_INIT_PASSWORD:
+    if not settings.TEACHER_INIT_TOKEN:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="管理员未配置初始化令牌，请联系管理员")
-    if req.setup_token != settings.TEACHER_INIT_PASSWORD:
+    if req.setup_token != settings.TEACHER_INIT_TOKEN:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="初始化令牌错误")
     if auth.check_teacher_setup(db):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="教师密码已设置")

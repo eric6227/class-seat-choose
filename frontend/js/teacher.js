@@ -322,9 +322,9 @@ function updateRoundUI() {
         var currentStudent = State.students.find(function(s) { return s.name === State.studentName; });
         if (currentStudent && currentStudent.selectionMethod && State.roundCompleted) {
             selectionMethodDisplay.textContent = '选座方式：' + currentStudent.selectionMethod;
-            selectionMethodDisplay.style.display = '';
+            selectionMethodDisplay.classList.remove('hidden');
         } else {
-            selectionMethodDisplay.style.display = 'none';
+            selectionMethodDisplay.classList.add('hidden');
         }
     }
 }
